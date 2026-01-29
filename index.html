@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tin Tức Trường 2026+ | Cập nhật nhanh hoạt động, drama, thông báo trường học.">
+  <meta name="keywords" content="tin tức trường, hoạt động trường, drama học đường, thông báo trường học">
+  <meta property="og:title" content="Tin Tức Trường 2026+ | Hoạt động • Drama • Thông báo">
+  <meta property="og:description" content="Nơi cập nhật mọi tin tức nóng hổi, drama lớp, hoạt động ngoại khóa và thông báo quan trọng của trường 2026+.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200">
+  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:type" content="website">
+  <title>Tin Tức Trường Đoàn Kết jachim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- CSS: giảm lag bằng cách loại bỏ background grain, giảm blur và shadow, thu nhỏ animations -->
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --card: rgba(255,255,255,0.5);
+      --glass: rgba(255,255,255,0.45);
+      --pri: #3b82f6;
+      --pri2: #1d4ed8;
+      --acc: #f59e0b;
+      --danger: #ef4444;
+      --blur: blur(6px);
+      --border: 1px solid rgba(255,255,255,0.4);
+      --glow: 0 0 24px rgba(59,130,246,0.2);
+      --inner-glow: inset 0 0 14px rgba(255,255,255,0.35);
+      --shadow: 0 8px 20px rgba(0,0,0,0.08);
+      --radius: 24px;
+      --spacing: 2rem;
+      --transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      --grain: none; /* removed heavy embedded SVG noise */
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --card: rgba(30,41,59,0.7);
+      --glass: rgba(30,41,59,0.6);
+      --blur: blur(24px);
+      --border: 1px solid rgba(255,255,255,0.18);
+      --glow: 0 0 28px rgba(59,130,246,0.3);
+      --inner-glow: inset 0 0 16px rgba(255,255,255,0.2);
+      --shadow: 0 20px 60px rgba(0,0,0,0.6);
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    }
+
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg) var(--grain);
+      background-blend-mode: overlay;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      transition: background 0.6s ease, color 0.6s ease;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    .skip-link {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+      z-index: 9999;
+    }
+    .skip-link:focus {
+      top: 1rem;
+      left: 1rem;
+      background: var(--pri);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--pri), #60a5fa, #a5b4fc, var(--pri2));
+      background-size: 400% 400%;
+      color: white;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: clamp(2.8rem, 9vw, 5rem);
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+      letter-spacing: -1.5px;
+    }
+
+    header p {
+      font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+      opacity: 0.95;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .header-actions {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .theme-toggle, .noti-bell {
+      background: rgba(255,255,255,0.3);
+      border: none;
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      backdrop-filter: blur(12px);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover, .noti-bell:hover {
+      transform: scale(1.15) rotate(20deg);
+      background: rgba(255,255,255,0.45);
+    }
+
+    .noti-bell.has-new::after {
+      content: attr(data-count);
+      position: absolute;
+      top: -8px; right: -8px;
+      background: var(--danger);
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass) var(--grain);
+      border-bottom: var(--border);
+      padding: 1.2rem;
+      box-shadow: var(--glow), var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a, .nav-links button {
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: var(--transition);
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .nav-links a:hover, .nav-links button:hover {
+      background: rgba(59,130,246,0.25);
+      transform: translateY(-3px);
+    }
+
+    .nav-links .active {
+      background: linear-gradient(135deg, var(--pri), var(--pri2));
+      color: white;
+      box-shadow: 0 8px 24px rgba(59,130,246,0.4);
+    }
+
+    .search-bar {
+      max-width: 800px;
+      margin: 3rem auto;
+      display: flex;
+      padding: 0 1.5rem;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 1.2rem 1.8rem;
+      border: none;
+      border-radius: 999px 0 0 999px;
+      background: var(--glass) var(--grain);
+      border: var(--border);
+      font-size: 1.1rem;
+      transition: var(--transition);
+      box-shadow: var(--inner-glow);
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.35), var(--glow);
+      background: rgba(255,255,255,0.95);
+    }
+
+    [data-theme="dark"] .search-bar input:focus {
+      background: rgba(30,41,59,0.98);
+    }
+
+    .search-bar button {
+      padding: 0 2rem;
+      border-radius: 0 999px 999px 0;
+      background: linear-gradient(135deg, var(--pri), var(--pri2));
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: var(--transition);
+      box-shadow: var(--glow);
+    }
+
+    .search-bar button:hover { transform: scale(1.08); }
+
+    .container {
+      max-width: 1600px;
+      margin: var(--spacing) auto;
+      padding: 0 1.5rem;
+    }
+
+    .news {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card) var(--grain);
+      border: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow), var(--glow);
+      transition: var(--transition);
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      cursor: pointer;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card.pinned::before {
+      content: 'PINNED';
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--acc);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 3;
+      box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+
+    .card img {
+      height: 200px;
+      object-fit: cover;
+      will-change: transform;
+      transition: transform 400ms ease;
+    }
+
+    .card:hover img { transform: scale(1.15); }
+
+    .content { padding: 1.6rem; position: relative; z-index: 1; }
+
+    .tag {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .tag { transform: scale(1.12); }
+
+    .new-badge {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: linear-gradient(135deg, var(--acc), #fbbf24);
+      color: white;
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      z-index: 2;
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .meta {
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .share-btn {
+      background: none;
+      border: none;
+      color: var(--pri);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .share-btn:hover { color: var(--pri2); transform: scale(1.2); }
+
+    aside {
+      background: var(--glass) var(--grain);
+      border: var(--border);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), var(--glow);
+      margin: 3rem 0;
+    }
+
+    .clock {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      text-align: center;
+      font-weight: 900;
+      color: var(--pri);
+      letter-spacing: 4px;
+      margin: 0.5rem 0;
+      text-shadow: 0 0 16px rgba(59,130,246,0.5);
+      animation: glowPulse 5s infinite alternate;
+    }
+
+    .date {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      text-align: center;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 12px rgba(59,130,246,0.4); }
+      to   { text-shadow: 0 0 30px rgba(59,130,246,0.8); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 5rem 1.5rem 4rem;
+      background: var(--glass);
+      border-top: var(--border);
+      margin-top: 5rem;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .footer-section h4 {
+      font-size: 1.4rem;
+      margin-bottom: 1.4rem;
+      color: var(--pri);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--card) var(--grain);
+      backdrop-filter: var(--blur);
+      border: var(--border);
+      margin: 5% auto;
+      padding: 0;
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 800px;
+      box-shadow: var(--shadow), var(--glow);
+      position: relative;
+      animation: modalPop 0.4s ease;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close {
+      position: absolute;
+      right: 1.5rem;
+      top: 1.5rem;
+      color: var(--text);
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close:hover { color: var(--danger); }
+
+    .modal-img {
+      width: 100%;
+      height: auto;
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-tag {
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-text {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-meta {
+      font-size: 1rem;
+      opacity: 0.8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* RESPONSIVE */
+    @media (min-width: 640px) {
+      .news { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .news { grid-template-columns: repeat(3, 1fr); }
+      .container {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 4rem;
+        padding: 0 3rem;
+      }
+      aside { margin: 0; }
+      .card img { height: 220px; }
+      header { padding: 8rem 3rem 5rem; }
+    }
+
+    @media (max-width: 639px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--glass);
+        backdrop-filter: var(--blur);
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+      }
+      .nav-links.active { display: flex; }
+      .modal-content { width: 95%; margin: 10% auto; }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+
+  <header>
+    <h1>📰 Tin Tức Trường 2026+</h1>
+    <p>Cập nhật hoạt động • Drama • Thông báo siêu nhanh cho học sinh 2026!</p>
+
+    <div class="header-actions">
+      <button class="theme-toggle" aria-label="Chuyển đổi chế độ sáng/tối">🌙</button>
+      <button class="noti-bell" aria-label="Thông báo mới"><i class="fas fa-bell"></i></button>
+    </div>
+  </header>
+
+  <nav>
+    <button class="hamburger" aria-label="Mở menu điều hướng"><i class="fas fa-bars"></i></button>
+    <div class="nav-links">
+      <a href="#" data-category="all" class="active">Tất cả</a>
+      <a href="#" data-category="hoat-dong">Hoạt động</a>
+      <a href="#" data-category="drama">Drama</a>
+      <a href="#" data-category="thong-bao">Thông báo</a>
+    </div>
+  </nav>
+
+  <div class="search-bar">
+    <input id="searchInput" placeholder="Tìm drama hot, hoạt động sắp tới, thông báo..." aria-label="Tìm kiếm tin tức trường">
+    <button aria-label="Thực hiện tìm kiếm"><i class="fas fa-search"></i></button>
+  </div>
+
+  <div class="container">
+    <main id="main-content">
+      <section class="news" id="newsList" aria-live="polite"></section>
+      <div style="text-align:center;margin-top:14px">
+        <button id="loadMore" class="read small" style="background:transparent;color:var(--pri);border:1px solid rgba(0,0,0,0.06);padding:8px 14px;border-radius:10px;">Xem thêm</button>
+      </div>
+    </main>
+
+    <aside>
+      <h3>🕒 Giờ tại TP.HCM</h3>
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="date" id="date">--/--/----</div>
+      <p style="text-align:center; margin-top:2rem; font-size:1rem; opacity:0.9;">
+        Website Trường 2026+ • Code & Design by Bảo 💙<br>
+        Cập nhật realtime cho các bạn học sinh 6-9
+      </p>
+    </aside>
+  </div>
+
+  <!-- Modal -->
+  <div id="newsModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img class="modal-img" id="modalImg" src="" alt="">
+      <div class="modal-body">
+        <span class="modal-tag" id="modalTag"></span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-text" id="modalText"></p>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Thông tin liên hệ</h4>
+        <div class="contact-info">
+          <p><i class="fas fa-phone"></i> <a href="tel:0348707829">0348 707 829</a></p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:tranlegiabao04112011@gmail.com">tranlegiabao04112011@gmail.com</a></p>
+          <p><i class="fas fa-map-marker-alt"></i>Kontum (dựa trên IP)</p>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Về chúng tôi</h4>
+        <p>Trang tin nhanh nhất cho học sinh trường 2026+. Drama, hoạt động, thông báo – tất cả ở đây! Xây dựng với ❤️ bởi Bảo.</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 • Tin Tức Trường 2026+ • Made with passion for school life
+    </div>
+  </footer>
+
+  <!-- Script: thay thế phần nặng bằng render động, lazy images, debounce, dedupe, lazy load chat -->
+  <script>
+    // Theme toggle
+    const toggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    let theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    body.dataset.theme = theme;
+    toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+    toggle.onclick = () => {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      body.dataset.theme = theme;
+      localStorage.setItem('theme', theme);
+      toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    };
+
+    // Clock and Date (giờ Việt Nam)
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('vi-VN', {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
+      document.getElementById('date').textContent = now.toLocaleDateString('vi-VN', {day: '2-digit', month: '2-digit', year: 'numeric'});
+    }, 1000);
+
+    // Hamburger
+    document.querySelector('.hamburger').onclick = () => {
+      document.querySelector('.nav-links').classList.toggle('active');
+    };
+
+    // Notification demo
+    const notiBell = document.querySelector('.noti-bell');
+    let unread = parseInt(localStorage.getItem('unreadNews') || '4');
+    if (unread > 0) {
+      notiBell.classList.add('has-new');
+      notiBell.dataset.count = unread > 9 ? '9+' : unread;
+    }
+    notiBell.onclick = () => {
+      unread = 0;
+      localStorage.setItem('unreadNews', '0');
+      notiBell.classList.remove('has-new');
+      alert('Đã xem hết thông báo mới! 🎉 Không còn drama nào bỏ lỡ đâu nhé!');
+    };
+
+    /* -- New: compact newsData (dedupe + render + lazy images) -- */
+    const rawNews = [
+      { tag:"Hoạt động", title:"Ngày hội thể thao 2026", desc:"Giải bóng đá nội bộ từ 15-20/2.", img:"https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800", time:"28/01/2026", category:"hoat-dong", pinned:true },
+      { tag:"Drama", title:"Drama lớp 12A: Ai cướp crush?", desc:"Clip xuất hiện và nhà trường vào cuộc.", img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800", time:"27/01/2026", category:"drama" },
+      { tag:"Thông báo", title:"Nghỉ học 3/2 do bão", desc:"Toàn trường nghỉ ngày 3/2/2026.", img:"https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?w=800", time:"26/01/2026", category:"thong-bao", pinned:true },
+      // ...additional items...
+    ];
+
+    // dedupe by title
+    const newsData = Array.from(new Map(rawNews.map(i=>[i.title,i])).values());
+
+    const listEl = document.getElementById('newsList');
+    let displayed = 6;
+    let currentCategory = 'all';
+
+    // create card element (using data-src for lazy images)
+    function makeCard(item) {
+      const article = document.createElement('article');
+      article.className = 'card' + (item.pinned ? ' pinned':'') + ' visible'; // add 'visible' for initial render
+      article.dataset.category = item.category;
+      article.innerHTML = `
+        <div class="imgwrap" style="height:200px;overflow:hidden;background:#f0f2f5">
+          <img data-src="${item.img}" alt="${escapeHtml(item.title)}" loading="lazy" width="1200" height="700" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div class="content">
+          <span class="tag">${item.tag}</span>
+          ${item.pinned ? '' : ''}
+          <h3>${item.title}</h3>
+          <p>${item.desc}</p>
+          <div class="meta"><span>${item.time}</span><div><button class="share-btn" aria-label="Chia sẻ">🔗</button></div></div>
+        </div>
+      `;
+      return article;
+    }
+
+    // lazy-load images via IntersectionObserver
+    const imgObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target.querySelector('img[data-src]');
+        if (img && img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          // small decode async hint
+          img.decoding = 'async';
+        }
+        obs.unobserve(entry.target);
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.01 });
+
+    // render batch using DocumentFragment
+    function renderBatch() {
+      const filtered = newsData.filter(i => {
+        return currentCategory === 'all' || currentCategory === 'favorites' ? true : i.category === currentCategory;
+      });
+      const toShow = filtered.slice(0, displayed);
+      listEl.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      toShow.forEach(item => {
+        const card = makeCard(item);
+        frag.appendChild(card);
+      });
+      listEl.appendChild(frag);
+      // observe for lazy images & simple reveal
+      listEl.querySelectorAll('.card').forEach(c => {
+        imgObserver.observe(c);
+        setTimeout(()=> c.classList.add('visible'), 60);
+      });
+      // hide load more if none
+      document.getElementById('loadMore')?.style && (document.getElementById('loadMore').style.display = (filtered.length > displayed ? 'inline-block' : 'none'));
+    }
+
+    // delegation for card clicks (modal + share)
+    listEl.addEventListener('click', (e) => {
+      const shareBtn = e.target.closest('.share-btn');
+      if (shareBtn) {
+        const card = shareBtn.closest('.card');
+        shareCard(card);
+        return;
+      }
+      const card = e.target.closest('.card');
+      if (!card) return;
+      openModalFromCard(card);
+    });
+
+    function shareCard(card) {
+      const title = card.querySelector('h3')?.textContent || '';
+      const text = card.querySelector('p')?.textContent || '';
+      const url = window.location.href;
+      if (navigator.share) {
+        navigator.share({ title, text, url }).catch(()=>{});
+      } else {
+        try { navigator.clipboard.writeText(url); alert('Link đã sao chép: ' + title); } catch(e){ alert(title + '\n' + text + '\n' + url); }
+      }
+    }
+
+    // modal open from card
+    const modal = document.getElementById('newsModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTag = document.getElementById('modalTag');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalText = document.getElementById('modalText');
+    const modalMeta = document.getElementById('modalMeta');
+    const closeBtn = document.querySelector('.close');
+
+    function openModalFromCard(card){
+      modalImg.src = card.querySelector('img')?.src || '';
+      modalImg.alt = card.querySelector('img')?.alt || '';
+      modalTag.textContent = card.querySelector('.tag')?.textContent || '';
+      modalTitle.textContent = card.querySelector('h3')?.textContent || '';
+      modalText.textContent = card.querySelector('p')?.textContent || '';
+      modalMeta.innerHTML = card.querySelector('.meta')?.innerHTML.replace(/<button.*<\/button>/, '') || '';
+      modal.style.display = 'block';
+    }
+
+    closeBtn.addEventListener('click', ()=> modal.style.display = 'none');
+    window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+    // debounce helper
+    function debounce(fn, delay=300){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),delay); }; }
+
+    // search logic (debounced)
+    const searchInput = document.getElementById('searchInput');
+    searchInput && searchInput.addEventListener('input', debounce(()=> {
+      displayed = 6;
+      const q = searchInput.value.trim().toLowerCase();
+      if (q) {
+        const results = newsData.filter(i => (i.title + ' ' + i.desc + ' ' + (i.tag||'')).toLowerCase().includes(q));
+        listEl.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        results.slice(0, displayed).forEach(item => frag.appendChild(makeCard(item)));
+        listEl.appendChild(frag);
+        listEl.querySelectorAll('.card').forEach(c=>{ imgObserver.observe(c); setTimeout(()=>c.classList.add('visible'),60); });
+      } else {
+        renderBatch();
+      }
+    }, 300));
+
+    // load more (throttle)
+    let loadThrottle = false;
+    document.getElementById('loadMore')?.addEventListener('click', () => {
+      if (loadThrottle) return;
+      loadThrottle = true;
+      displayed += 6;
+      renderBatch();
+      setTimeout(()=> loadThrottle = false, 600);
+    });
+
+    // infinite load (throttled)
+    let scrollThrottle = false;
+    window.addEventListener('scroll', () => {
+      if (scrollThrottle) return;
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
+        scrollThrottle = true;
+        displayed += 6;
+        renderBatch();
+        setTimeout(()=> scrollThrottle = false, 800);
+      }
+    });
+
+    // category filter (event delegation)
+    document.querySelectorAll('[data-category]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('[data-category]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category || 'all';
+        displayed = 6;
+        renderBatch();
+      });
+    });
+
+    // simple escape
+    function escapeHtml(s){ return s ? s.replace(/"/g,'&quot;') : '' }
+
+    // init render
+    renderBatch();
+
+    /* -- Lazy-load chatbot: only load external script after user asks to chat -- */
+    let chatLoaded = false;
+    function loadChatOnce() {
+      if (chatLoaded) return;
+      chatLoaded = true;
+      const s = document.createElement('script');
+      s.src = "https://app.tudongchat.com/js/chatbox.js";
+      s.async = true;
+      s.onload = () => {
+        try { window.tudong_chatbox = new TuDongChat('dUTkuXhq6IYEtS6l69tt9'); window.tudong_chatbox.initial(); }
+        catch(e){ console.warn('Chat init failed', e); }
+      };
+      document.body.appendChild(s);
+    }
+    document.querySelector('.noti-bell')?.addEventListener('click', () => { /* existing notification logic */ });
+    const themeBtn = document.querySelector('.theme-toggle');
+    if (themeBtn) {
+      const chatBtn = document.createElement('button');
+      chatBtn.className = 'theme-toggle';
+      chatBtn.title = 'Mở Chat hỗ trợ';
+      chatBtn.innerHTML = '💬';
+      themeBtn.parentNode.insertBefore(chatBtn, themeBtn.nextSibling);
+      chatBtn.addEventListener('click', () => { loadChatOnce(); });
+    }
+  </script>
+
+</body>
+</html>
